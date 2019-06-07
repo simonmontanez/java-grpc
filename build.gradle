@@ -10,6 +10,7 @@ plugins {
     id 'java'
     id 'application'
     id 'com.google.protobuf' version '0.8.8'
+    id 'com.palantir.docker' version '0.22.1'
 }
 
 repositories {
@@ -60,6 +61,16 @@ sourceSets {
     }
 }
 
+task unpack(type: Copy) {
+    dependsOn tasks.distZip
+    from(zipTree(tasks.distZip.outputs.files.singleFile))
+    into("build/dependency")
+}
+
+docker {
+    copySpec.from(tasks.unpack.outputs).into("./")
+    name 'grpc-server:0.0.1'
+}
 
 // Define the main class for the application
 mainClassName = 'co.sam.App'
