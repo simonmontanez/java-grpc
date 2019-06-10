@@ -47,6 +47,13 @@ protobuf {
         all()*.plugins {
             grpc {}
         }
+        all().each { task ->
+            task.generateDescriptorSet = true
+            task.descriptorSetOptions.includeSourceInfo = true
+            task.descriptorSetOptions.includeImports = true
+            task.descriptorSetOptions.path =
+                    "${projectDir}/build/descriptors/out.pb"
+        }
     }
 }
 

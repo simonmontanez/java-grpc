@@ -1,7 +1,7 @@
-FROM openjdk:8-jdk-alpine
+FROM gcr.io/google_appengine/openjdk8
 
 EXPOSE 50051
 
-ADD java-grpc /java-grpc
+ADD ./build/dependency/java-grpc /java-grpc
 
 ENTRYPOINT exec ./java-grpc/bin/java-grpc
